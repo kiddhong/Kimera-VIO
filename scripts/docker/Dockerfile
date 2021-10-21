@@ -4,7 +4,7 @@ FROM ubuntu:18.04
 MAINTAINER Antoni Rosinol "arosinol@mit.edu"
 
 # To avoid tzdata asking for geographic location...
-ENV DEBIAN_frontend noninteractive
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Set the working directory to /root
 ENV DIRPATH /root
@@ -12,7 +12,14 @@ WORKDIR $DIRPATH
 
 #Install build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
-RUN apt-get update && apt-get install -y git cmake
+RUN apt-get update && apt-get install -y git cmake libffi-dev mesa-utils libgl1-mesa-glx
+RUN apt-get update && apt-get install -y mesa-utils libgl1-mesa-glx
+
+# nvidia-container-runtime
+ENV NVIDIA_VISIBLE_DEVICES \
+    ${NVIDIA_VISIBLE_DEVICES:-all}
+ENV NVIDIA_DRIVER_CAPABILITIES \
+    ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
 
 # Install xvfb to provide a display to container for GUI related testing.
 RUN apt-get update && apt-get install -y xvfb
@@ -51,6 +58,8 @@ RUN cd opencv/build && \
       -D BUILD_opencv_python=OFF \
       -D BUILD_opencv_python2=OFF \
       -D BUILD_opencv_python3=OFF \
+      -DWITH_VTK=On \
+      -DWITH_CUDA=OFF \
       -DOPENCV_EXTRA_MODULES_PATH=$DIRPATH/opencv_contrib/modules .. && \
       make -j$(nproc) install
 
@@ -125,8 +134,10 @@ RUN cd Kimera-VIO && mkdir build && cd build && cmake .. && make -j$(nproc)
 
 # Download and extract EuRoC dataset.
 RUN apt-get update && apt-get install -y wget
-RUN wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room1/V1_01_easy/V1_01_easy.zip
-RUN mkdir -p $DIRPATH/euroc && unzip V1_01_easy.zip -d $DIRPATH/euroc
+# RUN wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room1/V1_01_easy/V1_01_easy.zip
+# RUN mkdir -p $DIRPATH/euroc && unzip V1_01_easy.zip -d $DIRPATH/euroc
+RUN wget http://robotics.ethz.ch/~asl-datasets/ijrr_euroc_mav_dataset/vicon_room1/V1_02_medium/V1_02_medium.zip
+RUN mkdir -p $DIRPATH/euroc && unzip V1_02_medium.zip -d $DIRPATH/euroc
 
 # Yamelize euroc dataset
 RUN bash $DIRPATH/Kimera-VIO/scripts/euroc/yamelize.bash -p $DIRPATH/euroc
