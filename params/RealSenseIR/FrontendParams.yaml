@@ -59,7 +59,7 @@ ransac_probability: 0.995
 ransac_randomize: 0
 intra_keyframe_time: 0.1
 minNumberFeatures: 0
-useStereoTracking: 1
+useStereoTracking: 0
 disparityThreshold: 0.5
 # Type of optical flow predictor to aid feature tracking:
 # 0: Static - assumes no optical flow between images (aka static camera).
