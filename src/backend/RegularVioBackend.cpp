@@ -52,11 +52,11 @@ DEFINE_int32(min_num_obs_for_proj_factor,
              "possibility of being here, so this param must be higher than the "
              "min_age one to have any impact.");
 DEFINE_int32(min_num_of_plane_constraints_to_add_factors,
-             20,
+             40,
              "Minimum number of plane constraints to ");
 
 DEFINE_bool(convert_extra_smart_factors_to_proj_factors,
-            true,
+            false,
             "Whether to convert all smart factors in time horizon to "
             "projection factors, instead of just the ones in current frame.");
 DEFINE_bool(remove_old_reg_factors,
@@ -64,7 +64,7 @@ DEFINE_bool(remove_old_reg_factors,
             "Remove regularity factors for those landmarks that were "
             "originally associated to the plane, but which are not anymore.");
 DEFINE_int32(min_num_of_plane_constraints_to_remove_factors,
-             10,
+             25,
              "Number of constraints for a plane to be considered "
              "underconstrained when trying to remove old regularity factors. "
              "If a plane is thought to be underconstrained, we'll try to "
@@ -80,7 +80,7 @@ DEFINE_bool(use_unstable_plane_removal,
             "prior on the plane and removes as many factors from the plane as "
             "possible to avoid seg fault.");
 DEFINE_int32(min_num_of_plane_constraints_to_avoid_seg_fault,
-             3,
+             10,
              "Minimum number of constraints from landmark to plane to keep in "
              "order to avoid seg fault when removing factors for a specific "
              "plane. If all the factors are removed, then ISAM2 will seg fault,"
