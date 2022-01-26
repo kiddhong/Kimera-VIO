@@ -75,6 +75,10 @@ class Camera {
   void undistortKeypoints(const KeypointsCV& keypoints,
                           StatusKeypointsCV* status_keypoints) const;
 
+  void undistortedImage(
+    const cv::Mat& img,
+    cv::Mat* undistorted_img) const;
+
   /**
    * @brief getCalibration
    * @return  The intrinsic calibration of the camera

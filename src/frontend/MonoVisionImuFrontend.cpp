@@ -296,6 +296,16 @@ StatusMonoMeasurementsPtr MonoVisionImuFrontend::processFrame(
     //   if (FLAGS_log_feature_tracks) sendFeatureTracksToLogger();
     //   if (FLAGS_log_mono_matching_images) sendMonoTrackingToLogger();
     // }
+
+    // cv::Mat rectified_frame;
+    // mono_camera_->undistortedImage(mono_frame_k_->img_, &rectified_frame);
+    // if (display_queue_ && FLAGS_visualize_feature_tracks) {
+    //   displayImage(mono_frame_k_->timestamp_,
+    //     "rectified_image",
+    //     rectified_frame,
+    //     display_queue_);
+    // }
+
     if (display_queue_ && FLAGS_visualize_feature_tracks) {
       displayImage(mono_frame_k_->timestamp_,
                    "feature_tracks",

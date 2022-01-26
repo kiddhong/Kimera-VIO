@@ -12,9 +12,20 @@ T_BS:
          0.0, 0.0, 0.0, 1.0]
 
 # Camera specific definitions.
+# rate_hz: 30
+# resolution: [640, 480]
+# camera_model: pinhole
+# intrinsics: [384.6517877875679, 385.80743823947375, 323.0940939324028, 239.4007620255053] #fu, fv, cu, cv
+# distortion_model: equidistant
+# distortion_coefficients: [0.33272557213785425, 0.20855196388908398, -0.14436817873485477, 0.2040126459333023]
+
+# Camera specific definitions.
 rate_hz: 30
-resolution: [640, 480]
+resolution: [1280, 720]
 camera_model: pinhole
-intrinsics: [384.6517877875679, 385.80743823947375, 323.0940939324028, 239.4007620255053] #fu, fv, cu, cv
+intrinsics: [590.55786312369901, 591.143681745511, 677.93260976266811, 456.61529987992304]
 distortion_model: equidistant
-distortion_coefficients: [0.33272557213785425, 0.20855196388908398, -0.14436817873485477, 0.2040126459333023]
+distortion_coefficients: [4.1373618750845829e-03,
+                          -8.1564295283947236e-02,
+                          8.2986959328934212e-02,
+                          -3.0873539919070020e-02]

@@ -109,4 +109,11 @@ void Camera::undistortKeypoints(const KeypointsCV& keypoints,
       keypoints, undistorted_keypoints, status_keypoints);
 }
 
+void Camera::undistortedImage(
+  const cv::Mat& img,
+  cv::Mat* undistorted_img) const {
+  CHECK(undistorter_);
+  undistorter_->undistortRectifyImage(img, undistorted_img);
+}
+
 }  // namespace VIO
