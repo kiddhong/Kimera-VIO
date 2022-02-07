@@ -7,18 +7,31 @@ camera_id: left_cam
 T_BS:
   cols: 4
   rows: 4
-  data: [0.0, -1.0, 0.0, 0.0,
-         0.0, 0.0, -1.0, 0.0,
-         1.0, 0.0, 0.0, -0.025,
+  data: [0.0, -1.0, 0.0, 0.35,
+         0.0, 0.0, -1.0, -0.065,
+         1.0, 0.0, 0.0, -0.021,
          0.0, 0.0, 0.0, 1.0]
 
 # Camera specific definitions.
 rate_hz: 30
-resolution: [1280, 720]
+resolution: [640, 360]
 camera_model: pinhole
-intrinsics: [590.55786312369901, 591.143681745511, 677.93260976266811, 456.61529987992304]
-distortion_model: equidistant
-distortion_coefficients: [4.1373618750845829e-03,
-                          -8.1564295283947236e-02,
-                          8.2986959328934212e-02,
-                          -3.0873539919070020e-02]
+intrinsics: [384.6517877875679, 385.80743823947375, 323.0940939324028, 239.4007620255053] #fu, fv, cu, cv
+distortion_model: radial-tangential
+distortion_coefficients: [-0.0580630414187908,
+                          0.0648676827549934,
+                          0.000270776363322511,
+                          0.000816116342321038,
+                          -0.0207655280828476]
+
+
+# Camera specific definitions.
+# rate_hz: 30
+# resolution: [1280, 720]
+# camera_model: pinhole
+# intrinsics: [590.55786312369901, 591.143681745511, 677.93260976266811, 456.61529987992304]
+# distortion_model: equidistant
+# distortion_coefficients: [4.1373618750845829e-03,
+#                           -8.1564295283947236e-02,
+#                           8.2986959328934212e-02,
+#                           -3.0873539919070020e-02]

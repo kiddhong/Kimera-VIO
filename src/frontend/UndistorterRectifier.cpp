@@ -27,10 +27,10 @@ UndistorterRectifier::UndistorterRectifier(const cv::Mat& P,
                                            const cv::Mat& R)
     : map_x_(), map_y_(), P_(P), R_(R), cam_params_(cam_params) {
   initUndistortRectifyMaps(cam_params, R, P, &map_x_, &map_y_);
-  LOG(INFO) << "camera_intrinsic: "
-    << cam_params.intrinsics_.at(0) << ", " << cam_params.intrinsics_.at(1) << ", "
-    << cam_params.intrinsics_.at(2) << ", " << cam_params.intrinsics_.at(3) << "\n";
-  LOG(INFO) << "size check: map:" << map_y_.size;
+  // LOG(INFO) << "camera_intrinsic: "
+  //   << cam_params.intrinsics_.at(0) << ", " << cam_params.intrinsics_.at(1) << ", "
+  //   << cam_params.intrinsics_.at(2) << ", " << cam_params.intrinsics_.at(3) << "\n";
+  // LOG(INFO) << "size check: map:" << map_y_.size;
 }
 
 // TODO(marcus): add unit test w/ and w/o rectification
