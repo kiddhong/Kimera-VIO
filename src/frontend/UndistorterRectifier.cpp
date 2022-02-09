@@ -27,10 +27,6 @@ UndistorterRectifier::UndistorterRectifier(const cv::Mat& P,
                                            const cv::Mat& R)
     : map_x_(), map_y_(), P_(P), R_(R), cam_params_(cam_params) {
   initUndistortRectifyMaps(cam_params, R, P, &map_x_, &map_y_);
-  // LOG(INFO) << "camera_intrinsic: "
-  //   << cam_params.intrinsics_.at(0) << ", " << cam_params.intrinsics_.at(1) << ", "
-  //   << cam_params.intrinsics_.at(2) << ", " << cam_params.intrinsics_.at(3) << "\n";
-  // LOG(INFO) << "size check: map:" << map_y_.size;
 }
 
 // TODO(marcus): add unit test w/ and w/o rectification
@@ -57,6 +53,9 @@ void UndistorterRectifier::UndistortRectifyKeypoints(
                                    cam_param.distortion_coeff_mat_,
                                    R ? R.get() : cv::noArray(),
                                    P ? P.get() : cv::noArray());
+    } break;
+    case DistortionModel::RECTIFIED: {
+      undistorted_keypoints->assign(keypoints.begin(), keypoints.end());
     } break;
     default: {
       LOG(FATAL) << "Unknown distortion model.";
@@ -149,10 +148,16 @@ void UndistorterRectifier::checkUndistortedRectifiedLeftKeypoints(
     bool cropped = UtilsOpenCV::cropToSize(&undistorted_kp, map_x_.size());
 
     // TODO(Toni): would be nicer to interpolate exact position.
-    float expected_distorted_kp_x = map_x_.at<float>(
+    float expected_distorted_kp_x, expected_distorted_kp_y;
+    if (cam_params_.distortion_model_ == DistortionModel::RECTIFIED) {
+      expected_distorted_kp_x = undistorted_kp.x;
+      expected_distorted_kp_y = undistorted_kp.y;
+    } else {
+      float expected_distorted_kp_x = map_x_.at<float>(
         std::round(undistorted_kp.y), std::round(undistorted_kp.x));
-    float expected_distorted_kp_y = map_y_.at<float>(
+      float expected_distorted_kp_y = map_y_.at<float>(
         std::round(undistorted_kp.y), std::round(undistorted_kp.x));
+    }
 
     if (cropped) {
       VLOG(5) << "Undistorted Rectified keypoint out of image!\n"
@@ -251,6 +256,17 @@ void UndistorterRectifier::initUndistortRectifyMaps(
           // Output:
           map_x_float,
           map_y_float);
+    } break;
+    case DistortionModel::RECTIFIED: {
+      map_x_float.create(cam_params.image_size_, CV_32FC1);
+      map_y_float.create(cam_params.image_size_, CV_32FC1);
+
+      for (int j = 0; j < cam_params.image_size_.height; j++) {
+        for (int i = 0; i < cam_params.image_size_.width; i++) {
+          map_x_float.at<float>(j, i) = i;
+          map_y_float.at<float>(j, i) = j;
+        }
+      }
     } break;
     default: {
       LOG(FATAL) << "Unknown distortion model: "

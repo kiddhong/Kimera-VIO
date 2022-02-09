@@ -6,22 +6,20 @@ camera_id: right_cam
 T_BS:
   cols: 4
   rows: 4
-  data: [0.0, -1.0, 0.0, 0.035,
-         0.0, 0.0, -1.0, 0.085,
-         1.0, 0.0, 0.0, -0.025,
+  data: [0.0, 0.0, 1.0, 0.035,
+         -1.0, 0.0, 0.0, -0.085,
+         0.0, -1.0, 0.0, -0.025,
          0.0, 0.0, 0.0, 1.0]
 
 # Camera specific definitions.
 rate_hz: 30
 resolution: [640, 360]
 camera_model: pinhole
-intrinsics: [318.247772216797, 317.941162109375, 314.012145996094, 188.928817749023] #fu, fv, cu, cv
-distortion_model: radial-tangential
-distortion_coefficients: [-0.0554962754249573,
-                          0.0620056353509426,
-                          -0.00040198169881478,
-                          -0.000431042310083285,
-                          -0.0196361262351274]
+intrinsics: [318.2477722167969, 317.941162109375, 314.01214599609375, 188.92881774902344] #fu, fv, cu, cv
+distortion_model: rectified
+distortion_coefficients: [0.0, 0.0, 0.0, 0.0] # input image was already rectified.
+
+# [-0.05806304141879082, 0.06486768275499344, 0.0002707763633225113, 0.0008161163423210382, -0.020765528082847595]
 
 # Camera specific definitions.
 # rate_hz: 30

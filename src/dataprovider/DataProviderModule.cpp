@@ -61,7 +61,7 @@ bool DataProviderModule::getTimeSyncedImuMeasurements(
            &imu_meas->timestamps_,
            &imu_meas->acc_gyr_)) !=
           utils::ThreadsafeImuBuffer::QueryResult::kDataAvailable) {
-    VLOG(1) << "No IMU data available. Reason:\n";
+    // VLOG(1) << "No IMU data available. Reason:\n";
     switch (query_result) {
       case utils::ThreadsafeImuBuffer::QueryResult::kDataNotYetAvailable: {
         if (log_error_once) {

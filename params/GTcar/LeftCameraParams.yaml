@@ -2,27 +2,24 @@
 # General sensor definitions.
 camera_id: left_cam
 
-
 # Sensor extrinsics wrt. the body-frame.
 T_BS:
   cols: 4
   rows: 4
-  data: [0.0, -1.0, 0.0, 0.35,
-         0.0, 0.0, -1.0, -0.065,
-         1.0, 0.0, 0.0, -0.021,
+  data: [0.0, 0.0, 1.0, 0.035,
+         -1.0, 0.0, 0.0, 0.065,
+         0.0, -1.0, 0.0, -0.025,
          0.0, 0.0, 0.0, 1.0]
 
 # Camera specific definitions.
 rate_hz: 30
 resolution: [640, 360]
 camera_model: pinhole
-intrinsics: [384.6517877875679, 385.80743823947375, 323.0940939324028, 239.4007620255053] #fu, fv, cu, cv
-distortion_model: radial-tangential
-distortion_coefficients: [-0.0580630414187908,
-                          0.0648676827549934,
-                          0.000270776363322511,
-                          0.000816116342321038,
-                          -0.0207655280828476]
+intrinsics: [320.0686950683594, 319.2478942871094, 317.05621337890625, 186.17213439941406] #fu, fv, cu, cv
+distortion_model: rectified
+distortion_coefficients: [0.0, 0.0, 0.0, 0.0] # input image was already rectified.
+
+# [-0.055496275424957275, 0.06200563535094261, -0.0004019816988147795, -0.000431042310083285, -0.01963612623512745]
 
 
 # Camera specific definitions.

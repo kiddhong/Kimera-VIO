@@ -356,6 +356,28 @@ void StereoCamera::computeRectificationParameters(
           // TODO: Flag to maximise area???
           cv::CALIB_ZERO_DISPARITY);
     } break;
+    case DistortionModel::RECTIFIED: {  // Tricky model
+      cv::stereoRectify(
+          // Input
+          left_cam_params.K_,
+          left_cam_params.distortion_coeff_mat_,
+          right_cam_params.K_,
+          right_cam_params.distortion_coeff_mat_,
+          left_cam_params.image_size_,
+          camL_Rot_camR,
+          camL_Tran_camR,
+          // Output
+          *R1,
+          *R2,
+          *P1,
+          *P2,
+          *Q,
+          cv::CALIB_ZERO_DISPARITY,
+          kAlpha,
+          cv::Size(),
+          ROI1,
+          ROI2);
+    } break;
     default: {
       LOG(FATAL) << "Unknown DistortionModel: "
                  << VIO::to_underlying(left_cam_params.distortion_model_);

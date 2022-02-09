@@ -56,8 +56,9 @@ void CameraParams::parseDistortion(const YamlParser& yaml_parser) {
   yaml_parser.getYamlParam("camera_model", &camera_model_);
   distortion_model_ = stringToDistortion(distortion_model, camera_model_);
   CHECK(distortion_model_ == DistortionModel::RADTAN ||
-        distortion_model_ == DistortionModel::EQUIDISTANT)
-      << "Unsupported distortion model. Expected: radtan or equidistant.";
+        distortion_model_ == DistortionModel::EQUIDISTANT ||
+        distortion_model_ == DistortionModel::RECTIFIED)
+      << "Unsupported distortion model. Expected: none or radtan or equidistant.";
   yaml_parser.getYamlParam("distortion_coefficients", &distortion_coeff_);
   convertDistortionVectorToMatrix(distortion_coeff_, &distortion_coeff_mat_);
 }
@@ -78,20 +79,22 @@ const DistortionModel CameraParams::stringToDistortion(
                  ::tolower);
 
   if (lower_case_camera_model == "pinhole") {
-    if (lower_case_camera_model == std::string("none")) {
+    if (lower_case_camera_model == std::string("none") ||
+      lower_case_distortion_model == std::string("none")) {
       return DistortionModel::NONE;
     } else if ((lower_case_distortion_model == std::string("plumb_bob")) ||
-               (lower_case_distortion_model ==
-                std::string("radial-tangential")) ||
+               (lower_case_distortion_model == std::string("radial-tangential")) ||
                (lower_case_distortion_model == std::string("radtan"))) {
       return DistortionModel::RADTAN;
     } else if (lower_case_distortion_model == std::string("equidistant")) {
       return DistortionModel::EQUIDISTANT;
+    } else if (lower_case_distortion_model == std::string("rectified")) {
+      return DistortionModel::RECTIFIED;
     } else {
       LOG(FATAL)
           << "Unrecognized distortion model for pinhole camera. Valid "
              "pinhole "
-             "distortion model options are 'none', 'radtan', 'equidistant'.";
+             "distortion model options are 'none', 'radtan', 'equidistant', 'rectified'.";
     }
   } else {
     LOG(FATAL)

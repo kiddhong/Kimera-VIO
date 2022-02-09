@@ -33,6 +33,7 @@ enum class DistortionModel {
   NONE,
   RADTAN,
   EQUIDISTANT,
+  RECTIFIED
 };
 
 /**
