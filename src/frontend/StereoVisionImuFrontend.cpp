@@ -179,6 +179,28 @@ StereoFrontendOutput::UniquePtr StereoVisionImuFrontend::nominalSpinStereo(
                                  tracker_status_summary_.lkf_T_k_mono_,
                                  tracker_status_summary_.lkf_T_k_stereo_);
     }
+
+    // const gtsam::Point3& mono_tran = tracker_status_summary_.lkf_T_k_mono_.translation();
+    // const gtsam::Rot3& mono_rotation =
+    //   tracker_status_summary_.lkf_T_k_mono_.rotation();
+
+    // const gtsam::Point3& stereo_tran = tracker_status_summary_.lkf_T_k_stereo_.translation();
+    // const gtsam::Rot3& stereo_rotation =
+    //   tracker_status_summary_.lkf_T_k_stereo_.rotation();
+
+    // double radian_to_degree = 180.0/M_PI;
+    // LOG(INFO) << "mono: "
+    //           << mono_tran.x() << "," << mono_tran.y() << "," << mono_tran.z() << ","
+    //           << mono_rotation.roll() * radian_to_degree << ","
+    //           << mono_rotation.pitch() * radian_to_degree << ","
+    //           << mono_rotation.yaw() * radian_to_degree << std::endl;
+
+    // LOG(INFO) << "stereo: "
+    //           << stereo_tran.x() << "," << stereo_tran.y() << "," << stereo_tran.z() << ","
+    //           << stereo_rotation.roll() * radian_to_degree << ","
+    //           << stereo_rotation.pitch() * radian_to_degree << ","
+    //           << stereo_rotation.yaw() * radian_to_degree << std::endl;
+
     ////////////////////////////////////////////////////////////////////////////
 
     // Reset integration the later the better so that we give to the Backend

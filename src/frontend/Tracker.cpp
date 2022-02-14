@@ -28,7 +28,7 @@
 #include "kimera-vio/visualizer/Display-definitions.h"
 
 DEFINE_bool(visualize_feature_predictions,
-            false,
+            true,
             "Visualizes feature tracks and predicted keypoints given rotation "
             "from IMU.");
 
@@ -224,7 +224,7 @@ std::pair<TrackingStatus, gtsam::Pose3> Tracker::geometricOutlierRejectionMono(
 
   // Solve.
   if (!mono_ransac_.computeModel(0)) {
-    VLOG(5) << "failure: 5pt RANSAC could not find a solution.";
+    LOG(WARNING) << "failure: 5pt RANSAC could not find a solution.";
     return std::make_pair(TrackingStatus::INVALID, gtsam::Pose3::identity());
   }
 
@@ -243,7 +243,7 @@ std::pair<TrackingStatus, gtsam::Pose3> Tracker::geometricOutlierRejectionMono(
   // Check quality of tracking.
   TrackingStatus status = TrackingStatus::VALID;
   if (mono_ransac_.inliers_.size() < tracker_params_.minNrMonoInliers_) {
-    VLOG(5) << "FEW_MATCHES: " << mono_ransac_.inliers_.size();
+    LOG(WARNING) << "FEW_MATCHES: " << mono_ransac_.inliers_.size();
     status = TrackingStatus::FEW_MATCHES;
   }
 
@@ -391,11 +391,11 @@ std::pair<Vector3, Matrix3> Tracker::getPoint3AndCovariance(
   // models!
   // (1e-1)
   if ((point3_i_gtsam - point3_i).norm() > 1e-1) {
-    VLOG(5) << "\n point3_i_gtsam \n " << point3_i_gtsam << "\n point3_i \n"
-             << point3_i;
-    LOG(FATAL) << "GetPoint3AndCovariance: inconsistent "
-               << "backprojection results (ref): "
-               << (point3_i_gtsam - point3_i).norm();
+    // VLOG(5) << "\n point3_i_gtsam \n " << point3_i_gtsam << "\n point3_i \n"
+    //          << point3_i;
+    // LOG(FATAL) << "GetPoint3AndCovariance: inconsistent "
+    //            << "backprojection results (ref): "
+    //            << (point3_i_gtsam - point3_i).norm();
   }
   if (Rmat) {
     point3_i = (*Rmat) * point3_i;  // optionally rotated to another ref frame
